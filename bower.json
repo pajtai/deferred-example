@@ -1,0 +1,8 @@
+{
+  "name": "deferred-example",
+  "version": "0.0.0",
+  "dependencies": {
+    "jquery": "~2.0.3",
+    "jquery.ui": "~1.10.3"
+  }
+}
