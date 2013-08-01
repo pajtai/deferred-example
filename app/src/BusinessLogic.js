@@ -11,10 +11,8 @@
             getAuthToken: getAuthToken,
             checkBalance: checkBalance,
             showLoginModal: showLoginModal,
-            checkBuyPermissions: checkBuyPermissions,
             depositMoney: depositMoney,
             doPurchase: doPurchase,
-            setParentalControls: setParentalControls,
             showConfirmation: showConfirmation,
             showBuyError: showBuyError
         };
@@ -35,18 +33,14 @@
         this
             .getAuthToken()
             .then(
-                this.checkBalance(titleId),
-                this.showLoginModal)
+                this.checkBalance(titleId),     // Success authToken
+                this.showLoginModal)            // Error authToken
             .then(
-                this.checkBuyPermissions(titleId),
-                this.depositMoney)
+                this.doPurchase(titleId),       // Success checkBalance
+                this.depositMoney)              // Error checkBalance
             .then(
-                this.doPurchase(titleId),
-                this.setParentalControls
-            )
-            .then(
-                this.showConfirmation(titleId),
-                this.showBuyError(titleId)
+                this.showConfirmation(titleId), // Success doPurchase
+                this.showBuyError(titleId)      // Error doPurchase
             )
     }
 
@@ -62,19 +56,11 @@
 
     }
 
-    function checkBuyPermissions() {
-
-    }
-
     function depositMoney() {
 
     }
 
     function doPurchase() {
-
-    }
-
-    function setParentalControls () {
 
     }
 
