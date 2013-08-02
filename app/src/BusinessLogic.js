@@ -3,9 +3,10 @@
     var BEGIN_METHOD = "beginMethod",
         PURCHASE_TITLE = "purchaseTitle",
         STOP_PURCHASE = "stopPurchase",
-        BusinessLogic = function(view, api, events) {
+        BusinessLogic = function(view, api, userData, events) {
             this.view = view;
             this.api = api;
+            this.userData = userData;
             this.events = events;
         },
         prototypeMethods = {
@@ -39,9 +40,9 @@
         console.log(titleId);
         this
             .getAuthToken()
-//            .then(
-//                this.checkBalance(titleId),     // Success authToken
-//                this.showLoginModal)            // Error authToken
+            .then(
+                this.checkBalance(titleId),     // Success authToken
+                this.showLoginModal)            // Error authToken
 //            .then(
 //                this.doPurchase(titleId),       // Success checkBalance
 //                this.depositMoney)              // Error checkBalance
@@ -56,18 +57,22 @@
 
     function getAuthToken() {
         var deferred = new $.Deferred();
+
         this.stopHandler = deferred;
         this.events.trigger(BEGIN_METHOD, "getAuthToken");
-        deferred.resolve();
+
+        this.userData.getAuthToken(deferred);
         return deferred.promise();
     }
 
-    function checkBalance() {
-
+    function checkBalance(titleId) {
+        return function(deferred) {
+            console.log("check balance");
+        }
     }
 
     function showLoginModal() {
-
+        console.log("show login modals")
     }
 
     function depositMoney() {
