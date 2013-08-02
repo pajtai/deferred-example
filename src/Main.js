@@ -5,6 +5,7 @@
         BEGIN = "Begin",
         BEGIN_METHOD = "beginMethod",
         CHECK_AUTH_RESPONSE = "checkAuthResponse",
+        CHECK_BALANCE_RESPONSE = 'checkBalanceResponse',
         PURCHASE_TITLE = "purchaseTitle",
         STOP = "Stop",
         STOP_PURCHASE = "stopPurchase",
@@ -50,6 +51,11 @@
         userDataEvents.on(CHECK_AUTH_RESPONSE, function() {
             sendResponseBack(
                 userData, "setAuthToken", $getAuthToken);
+        });
+
+        apiEvents.on(CHECK_BALANCE_RESPONSE, function() {
+            sendResponseBack(
+                api, "reportBalance", $checkBalance);
         });
 
         viewEvents.on(SHOW_LOGIN_MODAL, function() {

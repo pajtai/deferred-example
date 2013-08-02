@@ -21,7 +21,8 @@
             showConfirmation: showConfirmation,
             showBuyError: showBuyError,
             cancelPurchaseTitle: cancelPurchaseTitle,
-            stopPurchase: stopPurchase
+            stopPurchase: stopPurchase,
+            notifyProgress: notifyProgress
         };
 
     window.BusinessLogic = BusinessLogic;
@@ -42,33 +43,70 @@
             .getAuthToken()
             .then(
                 this.checkBalance(titleId),     // Success authToken
-                this.showLoginModal.bind(this))            // Error authToken
-//            .then(
-//                this.doPurchase(titleId),       // Success checkBalance
-//                this.depositMoney)              // Error checkBalance
-//            .then(
-//                this.showConfirmation(titleId), // Success doPurchase
-//                this.showBuyError(titleId)      // Error doPurchase
-//            )
+                this.showLoginModal.bind(this), // Error authToken
+                this.notifyProgress.bind(this))            // Notification method
+            .then(
+                this.doPurchase(titleId),       // Success checkBalance
+                this.depositMoney,              // Error checkBalance
+                this.notifyProgress.bind(this))
+            .then(
+                this.showConfirmation(titleId), // Success doPurchase
+                this.showBuyError(titleId),      // Error doPurchase
+                this.notifyProgress.bind(this)
+            )
             .always(
                 this.stopPurchase.bind(this)
             )
+
+//        var self = this;
+//        this.notifyProgress(BEGIN_METHOD, 'getAuthToken');
+//        this.getAuthToken(function (result) {
+//            if (VALID === result) {
+//                self.notifyProgress(BEGIN_METHOD, 'checkBalance');
+//                self.checkBalance(function (balance) {
+//                    if (ENOUGH === balance) {
+//                        self.notifyProgress(BEGIN_METHOD, 'doPurchase');
+//                        self.doPurchase(function (success) {
+//                            if (success) {
+//                                self.notifyProgress(BEGIN_METHOD, 'showConfirmation');
+//                                self.showConfirmation();
+//                            } else {
+//                                self.notifyProgress(BEGIN_METHOD, 'showBuyError');
+//                                self.showBuyError();
+//                            }
+//                        });
+//                    } else {
+//                        self.notifyProgress(BEGIN_METHOD, 'depositMoney');
+//                        self.depositMoney();
+//                    }
+//                });
+//            } else {
+//                self.notifyProgress(BEGIN_METHOD, 'showLoginModal');
+//                self.showLoginModal();
+//            }
+//        });
     }
 
     function getAuthToken() {
         var deferred = new $.Deferred();
 
         this.stopHandler = deferred;
-        this.events.trigger(BEGIN_METHOD, "getAuthToken");
+        deferred.notify(BEGIN_METHOD, 'getAuthToken');
 
         this.userData.getAuthToken(deferred);
         return deferred.promise();
     }
 
     function checkBalance(titleId) {
-        return function(deferred) {
-            console.log("check balance");
-        }
+        return function () {
+            var deferred = new $.Deferred();
+
+            this.stopHandler = deferred;
+            deferred.notify(BEGIN_METHOD, 'checkBalance');
+
+            this.api.checkBalance(deferred);
+            return deferred.promise();
+        }.bind(this);
     }
 
     function showLoginModal() {
@@ -81,11 +119,19 @@
     }
 
     function depositMoney() {
-
+        console.log('Deposit money!');
     }
 
-    function doPurchase() {
+    function doPurchase(titleId) {
+        return function () {
+            var deferred = new $.Deferred();
 
+            this.stopHandler = deferred;
+            deferred.notify(BEGIN_METHOD, 'doPurchase');
+
+            this.api.checkBalance(deferred);
+            return deferred.promise();
+        }.bind(this);
     }
 
     function showConfirmation() {
@@ -104,6 +150,14 @@
         console.log("**always** stop purchase");
         this.events.trigger(BEGIN_METHOD, "stopPurchase");
         this.stopHandler.reject();
+    }
+
+    function notifyProgress (arg, methodName) {
+        if (!arg || !methodName) {
+            return;
+        }
+        console.log(arg + ' : ' + methodName);
+        this.events.trigger(arg, methodName);
     }
 
 }(window.jQuery));
