@@ -1,27 +1,18 @@
 (function() {
 
-    var CHECK_AUTH_SPEED = "checkAuthSpeed",
-        CHECK_AUTH_RESPONSE = "checkAuthResponse",
+    var CHECK_AUTH_RESPONSE = "checkAuthResponse",
         VALID = "Valid",
-        View = function() {
-
-        },
-        API = function() {
-
-        },
         UserData = function(userDataEvents) {
             this.events = userDataEvents;
         },
-        userDataPrototypeMethods = {
+        prototypeMethods = {
             getAuthToken: getAuthToken,
             setAuthToken: setAuthToken
         };
 
-    window.View = View;
-    window.Api = API;
     window.UserData = UserData;
 
-    $.extend(UserData.prototype, userDataPrototypeMethods);
+    $.extend(UserData.prototype, prototypeMethods);
 
     function getAuthToken(authTokenRequest) {
         this.authTokenRequest = authTokenRequest;

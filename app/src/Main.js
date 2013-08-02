@@ -9,6 +9,7 @@
         STOP_PURCHASE = "stopPurchase",
         SUCCESS = "success",
         SECONDARY = "secondary",
+        SHOW_LOGIN_MODAL = "showLoginModal",
         INSTANT = "Instant",
         FAST = "Fast",
         SLOW = "Slow",
@@ -21,11 +22,15 @@
         $doPurchase = $("#doPurchase"),
         $depositMoney = $("#depositMoney"),
 
+        // Use divs removed from the DOM as separate Event channels
         events = $("<div/>"),
         userDataEvents = $("<div/>"),
+        viewEvents = $("<div/>"),
+        apiEvents = $("<div/>"),
 
-        api = new Api(),
-        view = new View(),
+
+        api = new Api(apiEvents),
+        view = new View(viewEvents),
         userData = new UserData(userDataEvents),
         businessLogic = new BusinessLogic(view, api, userData, events);
 
