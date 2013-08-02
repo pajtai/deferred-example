@@ -43,8 +43,8 @@
             .getAuthToken()
             .then(
                 this.checkBalance(titleId),     // Success authToken
-                this.showLoginModal.bind(this), // Error authToken
-                this.notifyProgress.bind(this))            // Notification method
+                this.showLoginModal(titleId), // Error authToken
+                this.notifyProgress.bind(this)) // Notification method
             .then(
                 this.doPurchase(titleId),       // Success checkBalance
                 this.depositMoney,              // Error checkBalance
@@ -54,9 +54,16 @@
                 this.showBuyError(titleId),      // Error doPurchase
                 this.notifyProgress.bind(this)
             )
-            .always(
-                this.stopPurchase.bind(this)
-            )
+            .fail(function() {
+                console.log("Faill!!!!!!");
+                console.log("Faill!!!!!!");
+                console.log("Faill!!!!!!");
+                console.log("Faill!!!!!!");
+                console.log("Faill!!!!!!");
+            })
+//            .always(
+//                this.stopPurchase.bind(this)
+//            )
 
 //        var self = this;
 //        this.notifyProgress(BEGIN_METHOD, 'getAuthToken');
@@ -88,6 +95,7 @@
     }
 
     function getAuthToken() {
+        console.log("-getAuthToken");
         var deferred = new $.Deferred();
 
         this.stopHandler = deferred;
@@ -109,17 +117,23 @@
         }.bind(this);
     }
 
-    function showLoginModal() {
-        var deferred = new $.Deferred();
+    function showLoginModal(titleId) {
+        return function() {
+            console.log("-showLoginModal");
+            var deferred = new $.Deferred();
 
-        this.stopHandler = deferred;
-        this.events.trigger(BEGIN_METHOD, "showLoginModal");
+            this.stopHandler = deferred;
+            deferred.notify(BEGIN_METHOD, "showLoginModal");
 
-        this.view.showLoginModal(deferred);
+            this
+                .view
+                .showLoginModal(deferred)
+                //.always(this.purchaseTitle(titleId));
+        }.bind(this);
     }
 
     function depositMoney() {
-        console.log('Deposit money!');
+        console.log('-depositMoney');
     }
 
     function doPurchase(titleId) {
@@ -139,7 +153,7 @@
     }
 
     function showBuyError() {
-
+        console.log("-showBuyError");
     }
 
     function cancelPurchaseTitle() {
@@ -156,7 +170,7 @@
         if (!arg || !methodName) {
             return;
         }
-        console.log(arg + ' : ' + methodName);
+        //console.log(arg + ' : ' + methodName);
         this.events.trigger(arg, methodName);
     }
 

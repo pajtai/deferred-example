@@ -5,7 +5,8 @@
             this.events = viewEvents;
         },
         prototypeMethods = {
-            showLoginModal: showLoginModal
+            showLoginModal: showLoginModal,
+            login: login
         };
 
     window.View = View;
@@ -15,5 +16,10 @@
     function showLoginModal(loginModalRequest) {
         this.loginModalRequest = loginModalRequest;
         this.events.trigger(SHOW_LOGIN_MODAL);
+        return loginModalRequest;
+    }
+
+    function login() {
+        this.loginModalRequest.resolve();
     }
 }())

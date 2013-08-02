@@ -53,18 +53,20 @@
                 userData, "setAuthToken", $getAuthToken);
         });
 
+        // Api Events
         apiEvents.on(CHECK_BALANCE_RESPONSE, function() {
             sendResponseBack(
                 api, "reportBalance", $checkBalance);
         });
 
+        // View Events
         viewEvents.on(SHOW_LOGIN_MODAL, function() {
-
+            sendResponseBack(
+                view, "login", $showLoginModal);
         });
 
         // Business Logic Events
         businessLogicEvents.on(BEGIN_METHOD, function(event, data) {
-            console.log(data);
             if (STOP_PURCHASE === data) {
                 stopDemo();
             }
@@ -108,7 +110,6 @@
         var time = 0;
         if (FAST === delay) time = 250;
         if (SLOW === delay) time = 1000;
-        console.log("delay is: " + time);
         return time;
     }
 
@@ -171,7 +172,6 @@
      * @param data
      */
     function updateCurrentCall(data) {
-        console.log("d: " + data);
         $currentCall.find("li > a").removeClass(SUCCESS).addClass(SECONDARY).filter(":contains('" + data + "')").addClass(SUCCESS);
     }
 }(window.jQuery, window.BusinessLogic, window.Api, window.View, window.UserData));
