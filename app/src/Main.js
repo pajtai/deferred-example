@@ -15,10 +15,11 @@
 
         $beginDemo = $("#beginDemo"),
         $currentCall = $("#currentCall"),
-        $getAuthTokenResponse = $("#getAuthTokenResponse"),
-        $getAuthTokenResponseA = $getAuthTokenResponse.find("a"),
-        $getAuthTokenResponseSpeed = $("#getAuthTokenResponseSpeed"),
-        $getAuthTokenResponseSpeedA = $getAuthTokenResponseSpeed.find("a"),
+        $getAuthToken = $("#getAuthToken"),
+        $checkBalance = $("#checkBalance"),
+        $showLoginModal = $("#showLoginModal"),
+        $doPurchase = $("#doPurchase"),
+        $depositMoney = $("#depositMoney"),
 
         events = $("<div/>"),
         userDataEvents = $("<div/>"),
@@ -35,9 +36,10 @@
 
         // User Data Events
         userDataEvents.on(CHECK_AUTH_RESPONSE, function() {
-            var delay = $getAuthTokenResponseSpeedA.filter(".success").text();
+            var delay = $getAuthToken.find(".speed a").filter(".success").text();
+            console.log("delay is: " + delay);
             setTimeout(function() {
-                userData.setAuthToken($getAuthTokenResponseA.filter(".success").text());
+                userData.setAuthToken($getAuthToken.find(".result a").filter(".success").text());
             }, getTime(delay));
             console.log("text is " + delay);
         });
@@ -54,11 +56,20 @@
 
     function addClickListeners() {
         $beginDemo.click(toggleBeginDemo);
-        $getAuthTokenResponse.on("click", "a", function(event) {
-            event.preventDefault();
-            $getAuthTokenResponseA.removeClass(SUCCESS).addClass(SECONDARY);
-            $(this).addClass("success");
-        });
+        $getAuthToken.on("click", "a", updateSuccessButton);
+        $checkBalance.on("click", "a", updateSuccessButton);
+        $showLoginModal.on("click", "a", updateSuccessButton);
+        $doPurchase.on("click", "a", updateSuccessButton);
+        $depositMoney.on("click", "a", updateSuccessButton);
+    }
+
+    function updateSuccessButton(event) {
+        var $this = $(this),
+            $a = $this.parent().parent().find('a');
+        console.log("click!");
+        event.preventDefault();
+        $a.removeClass(SUCCESS).addClass(SECONDARY);
+        $this.addClass("success");
     }
 
     function toggleBeginDemo() {
