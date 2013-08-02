@@ -17,6 +17,7 @@
     function getAuthToken(authTokenRequest) {
         this.authTokenRequest = authTokenRequest;
         this.events.trigger(CHECK_AUTH_RESPONSE);
+        return authTokenRequest;
     }
 
     function setAuthToken(authToken) {

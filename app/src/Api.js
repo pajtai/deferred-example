@@ -17,6 +17,7 @@
     function checkBalance(deferred) {
         this.balanceDeferred = deferred;
         this.events.trigger(CHECK_BALANCE_RESPONSE);
+        return deferred;
     }
 
     function reportBalance(enough) {

@@ -54,6 +54,9 @@
                 this.showBuyError(titleId),      // Error doPurchase
                 this.notifyProgress.bind(this)
             )
+            .done(
+                this.stopPurchase.bind(this)
+            )
             .fail(function() {
                 console.log("Faill!!!!!!");
                 console.log("Faill!!!!!!");
@@ -61,9 +64,7 @@
                 console.log("Faill!!!!!!");
                 console.log("Faill!!!!!!");
             })
-//            .always(
-//                this.stopPurchase.bind(this)
-//            )
+
 
 //        var self = this;
 //        this.notifyProgress(BEGIN_METHOD, 'getAuthToken');
@@ -107,6 +108,7 @@
 
     function checkBalance(titleId) {
         return function () {
+            console.log("-checkBalance");
             var deferred = new $.Deferred();
 
             this.stopHandler = deferred;
@@ -128,16 +130,19 @@
             this
                 .view
                 .showLoginModal(deferred)
-                //.always(this.purchaseTitle(titleId));
+                .always(this.purchaseTitle(titleId));
         }.bind(this);
     }
 
     function depositMoney() {
-        console.log('-depositMoney');
+        return function() {
+            console.log('-depositMoney');
+        }.bind(this);
     }
 
     function doPurchase(titleId) {
         return function () {
+            console.log("-doPurhcase");
             var deferred = new $.Deferred();
 
             this.stopHandler = deferred;
@@ -149,21 +154,26 @@
     }
 
     function showConfirmation() {
-
+        return function() {
+            console.log("-showConfirmation");
+        }.bind(this);
     }
 
     function showBuyError() {
-        console.log("-showBuyError");
+        return function() {
+            console.log("-showBuyError");
+        }.bind(this);
     }
 
     function cancelPurchaseTitle() {
-
+        return function() {
+            console.log("-cancelPurchaseTitle");
+        }.bind(this);
     }
 
     function stopPurchase() {
-        console.log("**always** stop purchase");
+        console.log("-stopPurcahse");
         this.events.trigger(BEGIN_METHOD, "stopPurchase");
-        this.stopHandler.reject();
     }
 
     function notifyProgress (arg, methodName) {
