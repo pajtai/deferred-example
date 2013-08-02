@@ -42,7 +42,7 @@
             .getAuthToken()
             .then(
                 this.checkBalance(titleId),     // Success authToken
-                this.showLoginModal)            // Error authToken
+                this.showLoginModal.bind(this))            // Error authToken
 //            .then(
 //                this.doPurchase(titleId),       // Success checkBalance
 //                this.depositMoney)              // Error checkBalance
@@ -72,7 +72,12 @@
     }
 
     function showLoginModal() {
-        console.log("show login modals")
+        var deferred = new $.Deferred();
+
+        this.stopHandler = deferred;
+        this.events.trigger(BEGIN_METHOD, "showLoginModal");
+
+        this.view.showLoginModal(deferred);
     }
 
     function depositMoney() {
@@ -96,7 +101,7 @@
     }
 
     function stopPurchase() {
-        console.log("stop purchase");
+        console.log("**always** stop purchase");
         this.events.trigger(BEGIN_METHOD, "stopPurchase");
         this.stopHandler.reject();
     }

@@ -37,61 +37,69 @@
             </ul>
         </div>
         <h3>Method call results</h3>
-        <div class="panel">
+        <div class="panel" id="getAuthToken">
             <h4>getAuthToken</h4>
             <p>Result will be:</p>
-            <ul id="getAuthTokenResponse" class="button-group round">
+            <ul class="result button-group round">
                 <li><a href="#" class="small success button">Valid</a></li>
                 <li><a href="#" class="small button secondary">Empty</a></li>
             </ul>
             <p>Result will be:</p>
-            <ul id="getAuthTokenSpeed" class="button-group round">
+            <ul class="speed button-group round">
                 <li><a href="#" class="small secondary button">Instant</a></li>
                 <li><a href="#" class="small secondary button">Fast</a></li>
                 <li><a href="#" class="small success button">Slow</a></li>
             </ul>
         </div>
-        <div class="panel">
+        <div class="panel" id="checkBalance">
             <h4>checkBalance</h4>
             <p>Result will be:</p>
-            <ul class="button-group round">
+            <ul class="result button-group round">
                 <li><a href="#" class="small success button">Enough</a></li>
                 <li><a href="#" class="small secondary button">Too Little</a></li>
             </ul>
             <p>Result will be:</p>
-            <ul class="button-group round">
+            <ul class="speed button-group round">
                 <li><a href="#" class="small secondary button">Instant</a></li>
                 <li><a href="#" class="small success button">Fast</a></li>
                 <li><a href="#" class="small secondary button">Slow</a></li>
             </ul>
         </div>
-        <div class="panel">
+        <div class="panel" id="showLoginModal">
             <h4>showLoginModal</h4>
+            <p>Result will be:</p>
+            <ul class="result button-group round">
+                <li><a href="#" class="small success button">Correct</a></li>
+            </ul>
             <p>User input will be:</p>
-            <ul class="button-group round">
+            <ul class="speed button-group round">
                 <li><a href="#" class="small secondary button">Instant</a></li>
                 <li><a href="#" class="small success button">Fast</a></li>
                 <li><a href="#" class="small secondary button">Slow</a></li>
             </ul>
         </div>
-        <div class="panel">
+        <div class="panel" id="doPurchase">
             <h4>doPurchase</h4>
             <p>Result will be:</p>
-            <ul class="button-group round">
+            <ul class="result button-group round">
                 <li><a href="#" class="small success button">Success</a></li>
                 <li><a href="#" class="small secondary button">Failure</a></li>
             </ul>
             <p>Result will be:</p>
-            <ul class="button-group round">
+            <ul class="speed button-group round">
                 <li><a href="#" class="small secondary button">Instant</a></li>
                 <li><a href="#" class="small success button">Fast</a></li>
                 <li><a href="#" class="small secondary button">Slow</a></li>
             </ul>
         </div>
-        <div class="panel">
+        <div class="panel" id="depositMoney">
             <h4>depositMoney</h4>
+            <p>Result will be:</p>
+            <ul class="result button-group round">
+                <li><a href="#" class="small success button">Enough</a></li>
+            </ul>
             <p>User input will be:</p>
-            <ul class="button-group round">
+            <ul class="speed button-group round">
                 <li><a href="#" class="small secondary button">Instant</a></li>
                 <li><a href="#" class="small success button">Fast</a></li>
                 <li><a href="#" class="small secondary button">Slow</a></li>
@@ -101,7 +109,9 @@
 </div>
 
 <script src="components/jquery/jquery.min.js"></script>
-<script src="src/MockedComponents.js"></script>
+<script src="src/UserData.js"></script>
+<script src="src/View.js"></script>
+<script src="src/Api.js"></script>
 <script src="src/BusinessLogic.js"></script>
 <script src="src/Main.js"></script>
 </body>
