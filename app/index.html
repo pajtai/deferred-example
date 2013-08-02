@@ -6,12 +6,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Backbone State Machine - BBSM</title>
-
-
+    <title>jQuery Deferred Example</title>
     <link rel="stylesheet" href="stylesheets/app.css" />
     <link rel="stylesheet" href="stylesheets/banner.css" />
-
 </head>
 <body>
 
@@ -28,7 +25,17 @@
         <p>jQuery Deferreds are a way to create references to the future values method calls.</p>
     </div>
     <div class="large-10 columns">
-        <h3 class="panel">Current call: checkBalance</h3>
+        <div class="panel">
+            <a href="#" id="beginDemo" class="small alert button round">Begin</a>
+            <h3>Current call: </h3>
+            <ul id="currentCall" class="button-group round">
+                <li><a href="#" class="small button secondary">getAuthToken</a></li>
+                <li><a href="#" class="small button secondary">checkBalance</a></li>
+                <li><a href="#" class="small button secondary">showLoginModal</a></li>
+                <li><a href="#" class="small button secondary">doPurchase</a></li>
+                <li><a href="#" class="small button secondary">depositMoney</a></li>
+            </ul>
+        </div>
         <h3>Method call results</h3>
         <div class="panel">
             <h4>getAuthToken</h4>
@@ -42,7 +49,7 @@
                 <li><a href="#" class="small success button">Instant</a></li>
             </ul>
         </div>
-        <div class="panel" style="background-color:#AEAEAE;">
+        <div class="panel highlight">
             <h4>checkBalance</h4>
             <p>Result will be:</p>
             <ul class="button-group round">
@@ -91,5 +98,9 @@
     </div>
 </div>
 
+<script src="components/jquery/jquery.min.js"></script>
+<script src="src/MockedComponents.js"></script>
+<script src="src/BusinessLogic.js"></script>
+<script src="src/Main.js"></script>
 </body>
 </html>
