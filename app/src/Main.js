@@ -4,6 +4,7 @@
     var // Cache some DOM elements. Caching could be more aggressive than this.
         $beginDemo = $("#beginDemo"),
         $currentCall = $("#currentCall"),
+        $currentCallSidebar = $("#currentCallSidebar"),
         $getAuthToken = $("#getAuthToken"),
         $checkBalance = $("#checkBalance"),
         $showLoginModal = $("#showLoginModal"),
@@ -185,5 +186,6 @@
     function updateCurrentCall(data) {
         console.log(data);
         $currentCall.find("li > a").removeClass(SUCCESS_CLASS).addClass(SECONDARY).filter(":contains('" + data + "')").addClass(SUCCESS_CLASS);
+        $currentCallSidebar.find("li > a").removeClass(SUCCESS_CLASS).addClass(SECONDARY).filter(":contains('" + data + "')").addClass(SUCCESS_CLASS);
     }
 }());
