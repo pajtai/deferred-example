@@ -1,10 +1,6 @@
 (function() {
 
-    var SHOW_LOGIN_MODAL = "showLoginModal",
-        SHOW_BUY_ERROR = "showBuyError",
-        SHOW_DEPOSIT_MONEY = "showDepositMoney",
-        SHOW_CONFIRMATION = "showConfirmation",
-        View = function(viewEvents) {
+    var View = function(viewEvents) {
             this.events = viewEvents;
         },
         prototypeMethods = {
