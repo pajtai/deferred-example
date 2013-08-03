@@ -6,11 +6,14 @@
         BEGIN_METHOD = "beginMethod",
         CHECK_AUTH_RESPONSE = "checkAuthResponse",
         CHECK_BALANCE_RESPONSE = 'checkBalanceResponse',
-        PURCHASE_TITLE = "purchaseTitle",
-        STOP = "Stop",
+        DO_PURCHASE = 'doPurchase',
+        STOP = "In Progress",
         STOP_PURCHASE = "stopPurchase",
         SUCCESS = "success",
         SECONDARY = "secondary",
+        SHOW_BUY_ERROR = "showBuyError",
+        SHOW_CONFIRMATION = "showConfirmation",
+        SHOW_DEPOSIT_MONEY = "showDepositMoney",
         SHOW_LOGIN_MODAL = "showLoginModal",
         INSTANT = "Instant",
         FAST = "Fast",
@@ -24,6 +27,8 @@
         $showLoginModal = $("#showLoginModal"),
         $doPurchase = $("#doPurchase"),
         $depositMoney = $("#depositMoney"),
+        $showBuyError = $("#showBuyError"),
+        $showConfirmation = $("#showConfirmation"),
 
         // Use divs removed from the DOM as separate Event channels
         businessLogicEvents = $("<div/>"),
@@ -58,11 +63,27 @@
             sendResponseBack(
                 api, "reportBalance", $checkBalance);
         });
+        apiEvents.on(DO_PURCHASE, function() {
+            sendResponseBack(
+                api, "purchaseDone", $doPurchase);
+        });
 
         // View Events
         viewEvents.on(SHOW_LOGIN_MODAL, function() {
             sendResponseBack(
                 view, "login", $showLoginModal);
+        });
+        viewEvents.on(SHOW_DEPOSIT_MONEY, function() {
+            sendResponseBack(
+                view, "moneyDeposited", $depositMoney);
+        });
+        viewEvents.on(SHOW_CONFIRMATION, function() {
+            sendResponseBack(
+                view, "hideConfirmation", $showConfirmation);
+        });
+        viewEvents.on(SHOW_BUY_ERROR, function() {
+            sendResponseBack(
+                view, "hideBuyError", $showBuyError);
         });
 
         // Business Logic Events
@@ -113,7 +134,8 @@
      * @returns {number}
      */
     function getTime(delay) {
-        var time = 0;
+        var time = 1000;
+        if (INSTANT === delay) time = 0;
         if (FAST === delay) time = 250;
         if (SLOW === delay) time = 1000;
         return time;
@@ -138,6 +160,7 @@
         $showLoginModal.on("click", "a", updateSuccessButton);
         $doPurchase.on("click", "a", updateSuccessButton);
         $depositMoney.on("click", "a", updateSuccessButton);
+        $showConfirmation.on("click", "a", updateSuccessButton);
     }
 
     /**
@@ -154,7 +177,7 @@
     }
 
     function toggleBeginDemo() {
-        $beginDemo.hasClass(ALERT) ? beginDemo() : stopDemo();
+        if ($beginDemo.hasClass(ALERT)) beginDemo();
     }
 
     function beginDemo() {
@@ -178,6 +201,7 @@
      * @param data
      */
     function updateCurrentCall(data) {
+        console.log(data);
         $currentCall.find("li > a").removeClass(SUCCESS).addClass(SECONDARY).filter(":contains('" + data + "')").addClass(SUCCESS);
     }
 }(window.jQuery, window.BusinessLogic, window.Api, window.View, window.UserData));

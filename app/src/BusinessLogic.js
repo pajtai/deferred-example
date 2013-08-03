@@ -47,7 +47,7 @@
                 this.notifyProgress()) // Notification method
             .then(
                 this.doPurchase(titleId),       // Success checkBalance
-                this.depositMoney,              // Error checkBalance
+                this.depositMoney(),              // Error checkBalance
                 this.notifyProgress())
             .then(
                 this.showConfirmation(titleId), // Success doPurchase
@@ -58,11 +58,6 @@
                 this.stopPurchase.bind(this)
             )
             .fail(function() {
-                console.log("Faill!!!!!!");
-                console.log("Faill!!!!!!");
-                console.log("Faill!!!!!!");
-                console.log("Faill!!!!!!");
-                console.log("Faill!!!!!!");
             })
 
 
@@ -121,17 +116,32 @@
             console.log("-showLoginModal" + new Date());
             var deferred = new $.Deferred();
             deferred.notify(BEGIN_METHOD, "showLoginModal");
+            // We do not return this deferred, since we want to break the chain and start again after showing the login modal
             this
                 .view
                 .showLoginModal(deferred)
                 .progress(this.notifyProgress())
                 .always(function() {this.purchaseTitle(titleId)}.bind(this));
+
+            // To break the chain we keep it alive forever.
+            return new $.Deferred();
         }.bind(this);
     }
 
-    function depositMoney() {
+    function depositMoney(titleId) {
         return function() {
             console.log('-depositMoney');
+            var deferred = new $.Deferred();
+            deferred.notify(BEGIN_METHOD, "depositMoney");
+
+            this
+                .view
+                .depositMoney(deferred)
+                .progress(this.notifyProgress())
+                .always(function() {this.purchaseTitle(titleId)}.bind(this));
+
+            // To break the chain we keep it alive forever.
+            return new $.Deferred();
         }.bind(this);
     }
 
@@ -142,20 +152,40 @@
 
             deferred.notify(BEGIN_METHOD, 'doPurchase');
 
-            this.api.checkBalance(deferred);
+            this.api.doPurchase(deferred);
             return deferred.promise();
         }.bind(this);
     }
 
     function showConfirmation() {
-        return function() {
+        return function () {
             console.log("-showConfirmation");
+            var deferred = new $.Deferred();
+
+            deferred.notify(BEGIN_METHOD, 'showConfirmation');
+
+            this.view.showConfirmation(deferred)
+                .progress(this.notifyProgress())
+                .done(function() {
+                    deferred.notify(BEGIN_METHOD, 'stop');
+                });
+            return deferred.promise();
         }.bind(this);
     }
 
-    function showBuyError() {
-        return function() {
+    function showBuyError(titleId) {
+        return function () {
             console.log("-showBuyError");
+            var deferred = new $.Deferred();
+
+            deferred.notify(BEGIN_METHOD, 'showBuyError');
+
+            this.view.showBuyError(deferred)
+                .progress(this.notifyProgress())
+                .always(function() {this.purchaseTitle(titleId)}.bind(this));
+
+            // To break the chain we keep it alive forever.
+            return new $.Deferred();
         }.bind(this);
     }
 
@@ -175,7 +205,6 @@
             if (!arg || !methodName) {
                 return;
             }
-            console.log(arg + ' : ' + methodName + " - " + new Date().getTime());
             this.events.trigger(arg, methodName);
         }.bind(this);
     }
