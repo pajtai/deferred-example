@@ -10,3 +10,29 @@ To try it out:
 1. Run `grunt server`
 
 http://pajtai.github.io/deferred-example/
+
+Deferreds can be used to make your code more readable and testable. For example this implementation uses Deferreds to
+make the business logic layer of a title purchase clear:
+
+```javascript
+        this
+            .getAuthToken()
+            .then(
+                this.checkBalance(titleId),     // Success authToken
+                this.showLoginModal(titleId), // Error authToken
+                this.notifyProgress()) // Notification method
+            .then(
+                this.doPurchase(titleId),       // Success checkBalance
+                this.depositMoney(),              // Error checkBalance
+                this.notifyProgress())
+            .then(
+                this.showConfirmation(titleId), // Success doPurchase
+                this.showBuyError(titleId),      // Error doPurchase
+                this.notifyProgress()
+            )
+            .done(
+                this.stopPurchase.bind(this)
+            )
+            .fail(function() {
+            })
+```
