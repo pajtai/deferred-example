@@ -81,7 +81,13 @@
      * @param $ellie
      */
     function sendResponseBack(context, method, $ellie) {
+        if ("login" === method) {
+            console.log(">>>>>>>>>>>>>> ");
+        }
         setTimeout(function() {
+            if ("login" === method) {
+                console.log("------------- " + getDelay($ellie));
+            }
             context[method](
                 getResult(
                     $ellie));

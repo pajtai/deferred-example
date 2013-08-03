@@ -44,15 +44,15 @@
             .then(
                 this.checkBalance(titleId),     // Success authToken
                 this.showLoginModal(titleId), // Error authToken
-                this.notifyProgress.bind(this)) // Notification method
+                this.notifyProgress()) // Notification method
             .then(
                 this.doPurchase(titleId),       // Success checkBalance
                 this.depositMoney,              // Error checkBalance
-                this.notifyProgress.bind(this))
+                this.notifyProgress())
             .then(
                 this.showConfirmation(titleId), // Success doPurchase
                 this.showBuyError(titleId),      // Error doPurchase
-                this.notifyProgress.bind(this)
+                this.notifyProgress()
             )
             .done(
                 this.stopPurchase.bind(this)
@@ -96,13 +96,11 @@
     }
 
     function getAuthToken() {
-        console.log("-getAuthToken");
+        console.log("-getAuthToken" + new Date());
         var deferred = new $.Deferred();
 
-        this.stopHandler = deferred;
-        deferred.notify(BEGIN_METHOD, 'getAuthToken');
-
         this.userData.getAuthToken(deferred);
+        deferred.notify(BEGIN_METHOD, 'getAuthToken');
         return deferred.promise();
     }
 
@@ -111,7 +109,6 @@
             console.log("-checkBalance");
             var deferred = new $.Deferred();
 
-            this.stopHandler = deferred;
             deferred.notify(BEGIN_METHOD, 'checkBalance');
 
             this.api.checkBalance(deferred);
@@ -121,16 +118,14 @@
 
     function showLoginModal(titleId) {
         return function() {
-            console.log("-showLoginModal");
+            console.log("-showLoginModal" + new Date());
             var deferred = new $.Deferred();
-
-            this.stopHandler = deferred;
             deferred.notify(BEGIN_METHOD, "showLoginModal");
-
             this
                 .view
                 .showLoginModal(deferred)
-                .always(this.purchaseTitle(titleId));
+                .progress(this.notifyProgress())
+                .always(function() {this.purchaseTitle(titleId)}.bind(this));
         }.bind(this);
     }
 
@@ -145,7 +140,6 @@
             console.log("-doPurhcase");
             var deferred = new $.Deferred();
 
-            this.stopHandler = deferred;
             deferred.notify(BEGIN_METHOD, 'doPurchase');
 
             this.api.checkBalance(deferred);
@@ -176,12 +170,14 @@
         this.events.trigger(BEGIN_METHOD, "stopPurchase");
     }
 
-    function notifyProgress (arg, methodName) {
-        if (!arg || !methodName) {
-            return;
-        }
-        //console.log(arg + ' : ' + methodName);
-        this.events.trigger(arg, methodName);
+    function notifyProgress () {
+        return function(arg, methodName) {
+            if (!arg || !methodName) {
+                return;
+            }
+            console.log(arg + ' : ' + methodName + " - " + new Date().getTime());
+            this.events.trigger(arg, methodName);
+        }.bind(this);
     }
 
 }(window.jQuery));
