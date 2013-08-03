@@ -12,7 +12,7 @@ To try it out:
 http://pajtai.github.io/deferred-example/
 
 Deferreds can be used to make your code more readable and testable. For example this implementation uses Deferreds to
-make the business logic layer of a title purchase clear:
+make the [business logic layer](https://github.com/pajtai/deferred-example/blob/master/app/src/BusinessLogic.js) of a title purchase clear:
 
 ```javascript
         this
