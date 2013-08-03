@@ -24,3 +24,14 @@
 .highlight {
     background-color:#AEAEAE;
 }
+
+.sticky {
+    position:fixed;
+    bottom:0;
+    z-index: 999999;
+    width:100%;
+}
+
+.float li {
+    float: left;
+}

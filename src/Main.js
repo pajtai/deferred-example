@@ -1,27 +1,10 @@
-(function($, BusinessLogic, Api, View, UserData) {
+(function() {
 
-        // Store strings as variables to help with IDE auto completion.
-    var ALERT = "alert",
-        BEGIN = "Begin",
-        BEGIN_METHOD = "beginMethod",
-        CHECK_AUTH_RESPONSE = "checkAuthResponse",
-        CHECK_BALANCE_RESPONSE = 'checkBalanceResponse',
-        DO_PURCHASE = 'doPurchase',
-        STOP = "In Progress",
-        STOP_PURCHASE = "stopPurchase",
-        SUCCESS = "success",
-        SECONDARY = "secondary",
-        SHOW_BUY_ERROR = "showBuyError",
-        SHOW_CONFIRMATION = "showConfirmation",
-        SHOW_DEPOSIT_MONEY = "showDepositMoney",
-        SHOW_LOGIN_MODAL = "showLoginModal",
-        INSTANT = "Instant",
-        FAST = "Fast",
-        SLOW = "Slow",
 
-        // Cache some DOM elements. Caching could be more aggressive than this.
+    var // Cache some DOM elements. Caching could be more aggressive than this.
         $beginDemo = $("#beginDemo"),
         $currentCall = $("#currentCall"),
+        $currentCallSidebar = $("#currentCallSidebar"),
         $getAuthToken = $("#getAuthToken"),
         $checkBalance = $("#checkBalance"),
         $showLoginModal = $("#showLoginModal"),
@@ -172,7 +155,7 @@
             $a = $this.parent().parent().find('a');
         console.log("click!");
         event.preventDefault();
-        $a.removeClass(SUCCESS).addClass(SECONDARY);
+        $a.removeClass(SUCCESS_CLASS).addClass(SECONDARY);
         $this.addClass("success");
     }
 
@@ -183,14 +166,14 @@
     function beginDemo() {
         $beginDemo
             .removeClass(ALERT)
-            .addClass(SUCCESS)
+            .addClass(SUCCESS_CLASS)
             .text(STOP);
         businessLogic.purchaseTitle(123);
     }
 
     function stopDemo() {
         $beginDemo
-            .removeClass(SUCCESS)
+            .removeClass(SUCCESS_CLASS)
             .addClass(ALERT)
             .text(BEGIN);
         businessLogic.cancelPurchaseTitle();
@@ -202,6 +185,7 @@
      */
     function updateCurrentCall(data) {
         console.log(data);
-        $currentCall.find("li > a").removeClass(SUCCESS).addClass(SECONDARY).filter(":contains('" + data + "')").addClass(SUCCESS);
+        $currentCall.find("li > a").removeClass(SUCCESS_CLASS).addClass(SECONDARY).filter(":contains('" + data + "')").addClass(SUCCESS_CLASS);
+        $currentCallSidebar.find("li > a").removeClass(SUCCESS_CLASS).addClass(SECONDARY).filter(":contains('" + data + "')").addClass(SUCCESS_CLASS);
     }
-}(window.jQuery, window.BusinessLogic, window.Api, window.View, window.UserData));
+}());

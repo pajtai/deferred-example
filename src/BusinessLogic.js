@@ -1,9 +1,6 @@
-(function($) {
+(function() {
 
-    var BEGIN_METHOD = "beginMethod",
-        PURCHASE_TITLE = "purchaseTitle",
-        STOP_PURCHASE = "stopPurchase",
-        BusinessLogic = function(view, api, userData, events) {
+    var BusinessLogic = function(view, api, userData, events) {
             this.view = view;
             this.api = api;
             this.userData = userData;
@@ -209,4 +206,4 @@
         }.bind(this);
     }
 
-}(window.jQuery));
+}());

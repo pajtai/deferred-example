@@ -1,10 +1,6 @@
 (function() {
 
-    var CHECK_BALANCE_RESPONSE = 'checkBalanceResponse',
-        ENOUGH = 'Enough',
-        SUCCESS = 'Success',
-        DO_PURCHASE = 'doPurchase',
-        Api = function(apiEvents) {
+    var Api = function(apiEvents) {
             this.events = apiEvents;
         },
         prototypeMethods = {

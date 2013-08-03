@@ -1,8 +1,6 @@
 (function() {
 
-    var CHECK_AUTH_RESPONSE = "checkAuthResponse",
-        VALID = "Valid",
-        UserData = function(userDataEvents) {
+    var UserData = function(userDataEvents) {
             this.events = userDataEvents;
         },
         prototypeMethods = {

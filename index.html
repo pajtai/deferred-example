@@ -11,6 +11,17 @@
     <link rel="stylesheet" href="stylesheets/banner.css" />
 </head>
 <body>
+<div class="sticky banner">
+    <ul id="currentCallSidebar" class="float">
+        <li><a href="#" class="small button secondary">getAuthToken</a></li>
+        <li><a href="#" class="small button secondary">checkBalance</a></li>
+        <li><a href="#" class="small button secondary">showLoginModal</a></li>
+        <li><a href="#" class="small button secondary">doPurchase</a></li>
+        <li><a href="#" class="small button secondary">depositMoney</a></li>
+        <li><a href="#" class="small button secondary">showBuyError</a></li>
+        <li><a href="#" class="small button secondary">showConfirmation</a></li>
+    </ul>
+</div>
 
 <div class="row banner">
     <div class="large-12 columns">
@@ -23,6 +34,7 @@
         <h3>Deferred</h3>
 
         <p>jQuery Deferreds are a way to create references to the future values method calls.</p>
+
     </div>
     <div class="large-10 columns">
         <div class="panel">
@@ -137,6 +149,7 @@
 </div>
 
 <script src="components/jquery/jquery.min.js"></script>
+<script src="src/Constants.js"></script>
 <script src="src/UserData.js"></script>
 <script src="src/View.js"></script>
 <script src="src/Api.js"></script>
