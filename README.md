@@ -1,7 +1,8 @@
 deferred-example
 ================
 
-Sample project using $.Deferred. 
+Sample project using $.Deferred.  
+ 
 _by Peter Ajtai & Jonathan Waltner_
 
 To try it out:
