@@ -131,3 +131,13 @@ make the [business logic layer](https://github.com/pajtai/deferred-example/blob/
             .fail(function() {
             })
 ```
+
+References:
+
+http://eng.wealthfront.com/2012/12/jquerydeferred-is-most-important-client.html
+
+http://www.html5rocks.com/en/tutorials/async/deferred/
+
+http://net.tutsplus.com/tutorials/javascript-ajax/wrangle-async-tasks-with-jquery-promises/
+
+http://danieldemmel.me/blog/2013/03/22/an-introduction-to-jquery-deferred-slash-promise/
