@@ -137,7 +137,17 @@
     }
 
     function addClickListeners() {
-        $beginDemo.click(toggleBeginDemo);
+        Rx.Observable
+            .fromEvent($beginDemo, 'click')
+            .filter(function() {
+                return $beginDemo.hasClass(ALERT);
+            })
+            .map(beginDemo)
+            // TODO: note that subscribe is needed here & why?
+            .subscribe();
+
+
+        //$beginDemo.click(toggleBeginDemo);
         $getAuthToken.on("click", "a", updateSuccessButton);
         $checkBalance.on("click", "a", updateSuccessButton);
         $showLoginModal.on("click", "a", updateSuccessButton);

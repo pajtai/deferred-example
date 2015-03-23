@@ -1,4 +1,5 @@
 (function() {
+    'use strict';
 
     var Api = function(apiEvents) {
             this.events = apiEvents;
@@ -37,4 +38,4 @@
             ? this.balanceDeferred.resolve()
             : this.balanceDeferred.reject();
     }
-}())
+}());

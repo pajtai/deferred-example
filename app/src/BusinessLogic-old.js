@@ -34,17 +34,7 @@
         return this.view;
     }
 
-    function purchaseTitle() {
-        Rx.Observable
-            .fromPromise(this.getAuthToken())
-            .flatMapLatest(function(token) {
-                console.log(arguments);
-            })
-            .subscribe();
-
-    }
-
-    function purchaseTitleOld(titleId) {
+    function purchaseTitle(titleId) {
         console.log(titleId);
         this
             .getAuthToken()
