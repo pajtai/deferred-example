@@ -34,13 +34,35 @@
         return this.view;
     }
 
-    function purchaseTitle() {
+    function purchaseTitle(titleID) {
+        var self = this,
+            successStream = Rx.Observable.fromArray([]),
+            failureStream = Rx.Observable.fromArray([]);
+
         Rx.Observable
             .fromPromise(this.getAuthToken())
-            .flatMapLatest(function(token) {
-                console.log(arguments);
-            })
-            .subscribe();
+            .forEach(function (success) {
+                successStream(success);
+            }, function (failure) {
+                failureStream.push(failure);
+            });
+
+        successStream.forEach(function () {
+            console.log('success');
+        });
+
+        failureStream.forEach(function () {
+            console.log('failure');
+        });
+        //
+        //Rx.Observable
+        //    .flatMapLatest(this.getAuthToken)
+        //    .forEach(function() {
+        //        // promise is resolved with undefined
+        //        console.log('success');
+        //    }, function() {
+        //        console.log('YEAH?');
+        //    });
 
     }
 

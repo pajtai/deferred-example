@@ -137,14 +137,41 @@
     }
 
     function addClickListeners() {
-        Rx.Observable
+        var demoStartClickStream = Rx.Observable
             .fromEvent($beginDemo, 'click')
             .filter(function() {
+                console.log('alert: ', $beginDemo.hasClass(ALERT));
                 return $beginDemo.hasClass(ALERT);
-            })
-            .map(beginDemo)
-            // TODO: note that subscribe is needed here & why?
-            .subscribe();
+            });
+
+        demoStartClickStream
+            .subscribe(function() {
+                $beginDemo
+                    .removeClass(ALERT)
+                    .addClass(SUCCESS_CLASS)
+                    .text(STOP);
+            });
+
+        var purchaseTitleCallStream = demoStartClickStream
+            .map(function () {
+                console.log('clicky');
+                return Rx.Observable.fromPromise(function() {
+                    var deferred = $.Defer();
+
+                    setTimeout(function() {
+                        console.log('done');
+                        deferred.resolve();
+                    }, 2000);
+
+                    return deferred.promise();
+                });
+            });
+
+
+        purchaseTitleCallStream.subscribe(function () {
+            console.log('stopped');
+            stopDemo();
+        });
 
 
         //$beginDemo.click(toggleBeginDemo);
@@ -171,14 +198,6 @@
 
     function toggleBeginDemo() {
         if ($beginDemo.hasClass(ALERT)) beginDemo();
-    }
-
-    function beginDemo() {
-        $beginDemo
-            .removeClass(ALERT)
-            .addClass(SUCCESS_CLASS)
-            .text(STOP);
-        businessLogic.purchaseTitle(123);
     }
 
     function stopDemo() {
